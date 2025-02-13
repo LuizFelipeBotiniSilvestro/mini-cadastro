@@ -1,0 +1,30 @@
+function carregarClientes() {
+    return alasql(`SELECT * FROM clientes`);
+}
+
+function verificarEnderecoPrincipal(cliente_id) {
+    return alasql(`SELECT * FROM enderecos WHERE cliente_id = ? AND principal = 1`, [cliente_id]).length > 0;
+}
+
+function cadastrarEndereco(cliente_id, cep, rua, bairro, cidade, estado, pais, principal) {
+    if (principal) {
+        alasql(`UPDATE enderecos SET principal = 0 WHERE cliente_id = ?`, [cliente_id]);
+    }
+
+    alasql(`
+        INSERT INTO enderecos (cliente_id, cep, rua, bairro, cidade, estado, pais, principal) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `, [cliente_id, cep, rua, bairro, cidade, estado, pais, principal]);
+}
+
+function listarEnderecos() {
+    return alasql(`
+        SELECT e.*, c.nome AS cliente_nome 
+        FROM enderecos e 
+        INNER JOIN clientes c ON e.cliente_id = c.id
+    `);
+}
+
+function excluirEndereco(id) {
+    alasql(`DELETE FROM enderecos WHERE id = ?`, [id]);
+}
