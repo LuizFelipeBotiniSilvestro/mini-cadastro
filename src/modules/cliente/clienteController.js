@@ -18,24 +18,41 @@ document.getElementById('clienteForm').addEventListener('submit', function (e) {
 
     cadastrarCliente(nome, cpf, nascimento, telefone, celular);
     alert('Cliente cadastrado com sucesso!');
+
+    // Atualiza os dados e a tabela
     listarClientesNaTabela();
 });
 
 function listarClientesNaTabela() {
-    const clientes = listarClientes();
-    const tabela = document.getElementById('tabelaClientes');
-    tabela.innerHTML = `<tr><th>Nome</th><th>CPF</th><th>Ações</th></tr>`;
+    let data = []; // Variável para armazenar os clientes
+    data = listarClientes(); // Obtém os clientes do banco
+    atualizarTabela(data);
+}
+
+function atualizarTabela(clientes) {
+    const tabelaBody = document.getElementById('tabelaClientesBody');
+    tabelaBody.innerHTML = ''; // Limpa a tabela antes de preencher
 
     clientes.forEach(cliente => {
-        tabela.innerHTML += `
+
+        const cpfFormatado = formatarCPF(cliente.cpf);
+        const telefoneFormatado = cliente.telefone ? formatarTelefone(cliente.telefone) : '.';
+        const celularFormatado = formatarTelefone(cliente.celular);
+
+        const row = `
             <tr>
                 <td>${cliente.nome}</td>
-                <td>${cliente.cpf}</td>
+                <td>${cpfFormatado}</td>
+                <td>${telefoneFormatado}</td>
+                <td>${celularFormatado}</td>
                 <td>
-                    <button onclick="excluirClienteAction(${cliente.id})">Excluir</button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirClienteAction(${cliente.id})">
+                        Excluir
+                    </button>
                 </td>
             </tr>
         `;
+        tabelaBody.innerHTML += row;
     });
 }
 
@@ -43,4 +60,12 @@ function excluirClienteAction(id) {
     excluirCliente(id);
     alert('Cliente excluído!');
     listarClientesNaTabela();
+}
+
+function formatarCPF(cpf) {
+    return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+}
+
+function formatarTelefone(numero) {
+    return numero.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
 }

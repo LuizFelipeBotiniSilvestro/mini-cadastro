@@ -1,21 +1,56 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    text-align: center;
+:root {
+    --primary-color: #00A2C6; /* Azul padrão */
+    --primary-dark: #004A5A;  /* Tom mais escuro para contrastes */
+    --text-light: #ffffff;  /* Cor branca para textos em fundo azul */
 }
 
-.container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #f9f9f9;
+.breadcrumb {
+    background: none; /* Remove fundo branco */
+    font-size: 16px;
+    padding: 10px 0;
 }
 
-a {
-    display: block;
-    margin-top: 20px;
+.breadcrumb-item a {
+    color: var(--primary-color); /* Usa a cor azul padrão */
     text-decoration: none;
-    font-weight: bold;
 }
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+
+/* Aplicando a cor padrão nos botões */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Aplicando a cor no menu lateral */
+.sidebar {
+    background-color: var(--primary-dark);
+}
+
+.sidebar .nav-link {
+    color: var(--text-light);
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--primary-color);
+}
+
+.btn-success {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-dark) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--primary-dark) !important;
+}
+

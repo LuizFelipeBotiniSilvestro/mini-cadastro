@@ -21,7 +21,8 @@ Desenvolvido em **HTML, CSS e JavaScript (Vanilla)**, utilizando **AlaSQL.js** p
 
 **Clone o Repositório:**  
 ```sh
-git clone https://github.com/seu-usuario/projeto_mini_cadastro.git
+git clone https://github.com/LuizFelipeBotiniSilvestro/mini-cadastro.git
 
 Autor
-Luiz Felipe Botini de Silvestro - Fevereiro de 2025
+Luiz Felipe Botini de Silvestro
+Fevereiro de 2025
