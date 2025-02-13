@@ -1,24 +1,134 @@
-/* Sidebar */
-.sidebar {
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    overflow-y: auto;
+/* 
+    Definição das cores principais 
+    Estas cores foram escolhidas para combinar com o design do site
+*/
+:root {
+    --primary-color: #00A2C6;  /* Azul - destaque nos botões e links */
+    --primary-dark: #003347;   /* Azul escuro - fundo do dashboard */
+    --text-light: #ffffff;     /* Branco - para melhor contraste nos textos */
 }
 
-.sidebar .nav-link {
-    font-size: 18px;
-    padding: 10px;
+/* 
+    Reset básico do body 
+    Remove margens padrão e aplica um fundo escuro
+*/
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-dark);
+    display: flex;
+    height: 100vh; /* Ocupa 100% da tela */
+}
+
+/* 
+Estrutura do layout principal 
+Flexbox para dividir a tela entre a sidebar e o conteúdo principal
+*/
+.dashboard-container {
+    display: flex;
+    width: 100%;
+}
+
+/* 
+    stilização da Sidebar (Menu Lateral)
+    A sidebar tem fundo escuro e um espaço bem distribuído
+*/
+.sidebar {
+    width: 250px;
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 
+    Título na sidebar (Marca "agrosys")
+    O "sys" tem a cor azul destacada, conforme logo
+*/
+.sidebar-header h2 {
+    font-size: 24px;
+    color: var(--text-light);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sidebar-header span {
+    color: var(--primary-color); /* Azul SYS */
+}
+
+/* 
+    Lista de navegação da sidebar
+    Os links ocupam 100% da largura e espaçados igualmente
+*/
+.sidebar .nav {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* 
+Itens do menu lateral 
+Os botões são grandes e fáceis de clicar, com efeito ao passar o mouse
+*/
+.sidebar .nav-item {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-item a {
+    text-decoration: none;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.1); /* Leve transparência */
+    padding: 12px;
+    display: block;
+    text-align: center;
+    border-radius: 5px;
     transition: background 0.3s;
 }
 
-.sidebar .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+/* 
+    Efeito hover no menu
+    Ao passar o mouse, o fundo fica azul 
+*/
+.sidebar .nav-item a:hover {
+    background: var(--primary-color);
 }
 
-/* Conteúdo Principal */
-main {
-    margin-left: 250px;
-    padding: 20px;
+/* 
+    Área principal do Dashboard
+    Texto centralizado e espaçamento
+*/
+.dashboard-content {
+    flex-grow: 1;
+    padding: 40px;
+    color: var(--text-light);
+    text-align: center;
+}
+
+/* 
+Títulos do Dashboard
+Tamanho grande e destaque para melhorar a leitura
+*/
+.dashboard-content h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.dashboard-content p {
+    font-size: 18px;
+}
+
+/* 
+    Responsividade
+    Reduz o tamanho da sidebar e o padding do conteúdo principal
+*/
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+    }
 }
