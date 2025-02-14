@@ -1,12 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exportar Banco de Dados</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="../../shared/styles.css">
     <link rel="stylesheet" href="exportar.css">
+
     <script src="../../shared/alasql.min.js"></script>
     <script src="../../shared/db.js"></script>
     <script src="exportarService.js"></script>
@@ -14,9 +18,25 @@
     <script src="../../app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Exportação de Banco de Dados</h2>
-        <button id="btnExportar">Exportar JSON</button>
+    <div class="container mt-4">
+        <div class="card p-4">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../dashboard/dashboard.html">Início</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Exportação de Banco de Dados</li>
+                </ol>
+            </nav>
+
+            <h2 class="text-center mb-4">Exportação de Banco de Dados</h2>
+
+            <div class="text-center">
+                <button id="btnExportar" class="btn btn-primary">Exportar JSON</button>
+            </div>
+        </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

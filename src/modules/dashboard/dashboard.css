@@ -21,8 +21,8 @@ body {
 }
 
 /* 
-Estrutura do layout principal 
-Flexbox para dividir a tela entre a sidebar e o conteúdo principal
+    Estrutura do layout principal 
+    Flexbox para dividir a tela entre a sidebar e o conteúdo principal
 */
 .dashboard-container {
     display: flex;
@@ -117,6 +117,33 @@ Tamanho grande e destaque para melhorar a leitura
 
 .dashboard-content p {
     font-size: 18px;
+}
+
+/* Efeito de entrada suave para o nome do usuário */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito de brilho no nome do usuário */
+#nomeUsuario {
+    display: inline-block;
+    font-weight: bold;
+    color: var(--primary-color); /* Azul */
+    animation: fadeIn 1s ease-in-out;
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+/* Brilho ao passar o mouse */
+#nomeUsuario:hover {
+    text-shadow: 0px 0px 8px var(--primary-color);
+    cursor: pointer;
 }
 
 /* 

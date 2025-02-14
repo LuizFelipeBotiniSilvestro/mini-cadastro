@@ -41,3 +41,32 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
     alert('Usuário cadastrado com sucesso!');
     window.location.href = 'login.html';
 });
+
+// Adiciona um evento ao botão de upload para processar o arquivo quando clicado
+document.getElementById("btnUpload")?.addEventListener("click", function () {
+    const fileInput = document.getElementById("uploadDb");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Selecione um arquivo JSON antes de importar!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        try {
+            const dados = JSON.parse(event.target.result);
+
+            // Chama o serviço para importar os dados (já validando o JSON)
+            importarBancoService(dados);
+            
+            alert("Banco de dados importado com sucesso!");
+            fileInput.value = ""; // Limpa o input após o upload
+        } catch (error) {
+            alert("Erro ao processar o arquivo. Verifique se é um JSON válido.");
+        }
+    };
+
+    reader.readAsText(file);
+});
+

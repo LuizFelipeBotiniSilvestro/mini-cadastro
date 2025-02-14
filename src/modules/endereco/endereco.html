@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Endereços</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="../../shared/styles.css">
     <link rel="stylesheet" href="endereco.css">
+
     <script src="../../shared/alasql.min.js"></script>
     <script src="../../shared/db.js"></script>
     <script src="enderecoService.js"></script>
@@ -13,33 +18,85 @@
     <script src="../../app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Cadastro de Endereços</h2>
-        <form id="enderecoForm">
-            <label>Cliente:</label>
-            <select id="cliente_id" required></select>
+    <div class="container mt-4">
+        <div class="card p-4">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../dashboard/dashboard.html">Início</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cadastro de Endereços</li>
+                </ol>
+            </nav>
 
-            <label>CEP:</label>
-            <input type="text" id="cep" required>
-            <label>Rua:</label>
-            <input type="text" id="rua" required>
-            <label>Bairro:</label>
-            <input type="text" id="bairro" required>
-            <label>Cidade:</label>
-            <input type="text" id="cidade" required>
-            <label>Estado:</label>
-            <input type="text" id="estado" required>
-            <label>País:</label>
-            <input type="text" id="pais" required>
+            <h2 class="text-center mb-4">Cadastro de Endereços</h2>
 
-            <label>Principal?</label>
-            <input type="checkbox" id="principal">
+            <!-- Formulário de Cadastro -->
+            <form id="enderecoForm" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Cliente:</label>
+                    <select id="cliente_id" class="form-select" required></select>
+                </div>
 
-            <button type="submit">Cadastrar</button>
-        </form>
+                <div class="col-md-6">
+                    <label class="form-label">CEP:</label>
+                    <input type="text" id="cep" class="form-control" required>
+                </div>
 
-        <h3>Lista de Endereços</h3>
-        <table id="tabelaEnderecos"></table>
+                <div class="col-md-6">
+                    <label class="form-label">Rua:</label>
+                    <input type="text" id="rua" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Bairro:</label>
+                    <input type="text" id="bairro" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Cidade:</label>
+                    <input type="text" id="cidade" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Estado:</label>
+                    <input type="text" id="estado" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">País:</label>
+                    <input type="text" id="pais" class="form-control" required>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="principal">
+                        <label class="form-check-label" for="principal">Endereço Principal</label>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+
+        <h3 class="mt-4">Lista de Endereços</h3>
+
+        <table id="tabelaEnderecos" class="table table-bordered table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>CEP</th>
+                    <th>Endereço</th>
+                    <th>Principal</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

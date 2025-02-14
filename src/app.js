@@ -1,3 +1,8 @@
+// Carregar o nome do usuário no Dashboard
+document.addEventListener("DOMContentLoaded", function () {
+    carregarNomeUsuario();
+});
+
 // Verifica se o usuário está logado ANTES de carregar a página
 (function verificarSessaoUsuario() {
     const usuario = sessionStorage.getItem('usuario');
@@ -13,6 +18,15 @@
         window.location.href = '/src/modules/auth/login.html';
     }
 })();
+
+function carregarNomeUsuario() {
+    const usuario = sessionStorage.getItem('usuario');
+
+    if (usuario) {
+        const usuarioObjeto = JSON.parse(usuario);
+        document.getElementById('nomeUsuario').textContent = usuarioObjeto.nome;
+    }
+}
 
 // Função para deslogar o usuário
 function logout() {
