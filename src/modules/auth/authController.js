@@ -1,3 +1,5 @@
+import { cadastrarUsuario, verificarEmailExistente, hashSenha } from "./authService.js";
+
 // Lógica do Login
 document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
     e.preventDefault();

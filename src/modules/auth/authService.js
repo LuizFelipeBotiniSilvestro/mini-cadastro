@@ -1,6 +1,6 @@
 import { limparCPF } from '../../shared/utils.js';
 
-async function hashSenha(senha) {
+export async function hashSenha(senha) {
     const encoder = new TextEncoder();
     const data = encoder.encode(senha);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -9,19 +9,17 @@ async function hashSenha(senha) {
                 .join('');
 }
 
-function verificarEmailExistente(email) {
-    lsEmail = email;
+export function verificarEmailExistente(email) {
+    var lsEmail = email;
     var emailExiste = alasql(`SELECT * FROM usuarios WHERE email = ?`, [lsEmail]).length > 0;
-
-    console.log('emailExiste', emailExiste)
     return emailExiste; //alasql(`SELECT * FROM usuarios WHERE email = ?`, [email]).length > 0;
 }
 
-function cadastrarUsuario(nome, email, senhaHash) {
+export function cadastrarUsuario(nome, email, senhaHash) {
     alasql(`INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`, [nome, email, senhaHash]);
 }
 
-function importarBancoService(dados) {
+export function importarBancoService(dados) {
 
     // Verifica se o arquivo tem a estrutura esperada
     if (!validarEstruturaBanco(dados)) {
@@ -73,18 +71,14 @@ function importarBancoService(dados) {
     }
 }
 
-function verificarEmailExistente(email) {
-    return alasql("SELECT * FROM usuarios WHERE email = ?", [email]).length > 0;
-}
-
-function verificarCPFExistente(cpf) {
-    lsCpf = limparCPF(cpf); // Remove pontuação antes de salvar
+export function verificarCPFExistente(cpf) {
+    var lsCpf = limparCPF(cpf); // Remove pontuação antes de salvar
     var cpfExiste = alasql(`SELECT * FROM clientes WHERE cpf = ?`, [lsCpf]).length > 0;
     return cpfExiste; //alasql(`SELECT * FROM clientes WHERE cpf = ?`, [cpf]).length > 0;
 }
 
 // Função para validar a estrutura do JSON, verificando apenas as chaves existentes
-function validarEstruturaBanco(dados) {
+export function validarEstruturaBanco(dados) {
     if (!dados || typeof dados !== "object") return false;
 
     // Se houver "usuarios", valida os campos obrigatórios
