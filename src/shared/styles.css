@@ -54,3 +54,11 @@
     background-color: var(--primary-dark) !important;
 }
 
+/* Padrão de letras */
+
+/* Uniformidade do projeto - Todos os inputs (exceto senha e email) ficam automaticamente em maiúsculas */
+input:not([type="password"]):not([type="email"]),
+textarea {
+    text-transform: uppercase;
+}
+

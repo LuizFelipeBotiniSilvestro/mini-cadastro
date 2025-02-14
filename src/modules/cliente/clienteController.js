@@ -1,7 +1,5 @@
-import { listarClientes } from './clienteService.js';
-import { verificarCPFExistente } from './clienteService.js';
-import { cadastrarCliente } from './clienteService.js';
-import { excluirCliente } from './clienteService.js';
+import { validarCPF, validarDataNascimento } from "../../shared/utils.js";
+import { listarClientes, verificarCPFExistente, cadastrarCliente, excluirCliente } from './clienteService.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     listarClientesNaTabela();
@@ -15,6 +13,18 @@ document.getElementById('clienteForm').addEventListener('submit', function (e) {
     const nascimento = document.getElementById('nascimento').value;
     const telefone = document.getElementById('telefone').value;
     const celular = document.getElementById('celular').value;
+
+    // Validação do CPF
+    if (!validarCPF(cpf)) {
+        alert("CPF inválido! Verifique e tente novamente.");
+      return;
+    }
+
+    // Validação da Data de Nascimento
+    if (!validarDataNascimento(nascimento)) {
+        alert("Data de nascimento inválida! Verifique e tente novamente.");
+      return;
+    }
 
     if (verificarCPFExistente(cpf)) {
         alert('CPF já cadastrado!');

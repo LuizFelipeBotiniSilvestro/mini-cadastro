@@ -1,6 +1,14 @@
 // Carregar o nome do usuário no Dashboard
 document.addEventListener("DOMContentLoaded", function () {
     carregarNomeUsuario();
+    
+    // Copiar e colar somente com letras maiúsculas (padrão para uniformidade do projeto)
+    document.querySelectorAll("input:not([type='password']):not([type='email']), textarea")
+    .forEach(input => {
+        input.addEventListener("input", function () {
+            this.value = this.value.toUpperCase();
+        });
+    });
 });
 
 // Verifica se o usuário está logado ANTES de carregar a página
