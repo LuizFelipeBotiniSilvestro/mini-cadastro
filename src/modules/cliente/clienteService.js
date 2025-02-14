@@ -1,23 +1,34 @@
-function verificarCPFExistente(cpf) {
-    return alasql(`SELECT * FROM clientes WHERE cpf = ?`, [cpf]).length > 0;
+import { limparCPF } from '../../shared/utils.js';
+
+export function verificarCPFExistente(cpf) {
+    var lsCpf = limparCPF(cpf); // Remove pontuação antes de salvar
+    var cpfExiste = alasql(`SELECT * FROM clientes WHERE cpf = ?`, [lsCpf]).length > 0;
+    return cpfExiste; //alasql(`SELECT * FROM clientes WHERE cpf = ?`, [cpf]).length > 0;
 }
 
-function limparCPF(cpf) {
-    return cpf.replace(/\D/g, '');  // Remove tudo que não for número
-}
-
-function cadastrarCliente(nome, cpf, nascimento, telefone, celular) {
-
-    cpf = limparCPF(cpf); // Remove pontuação antes de salvar
-    
+export function cadastrarCliente(nome, cpf, nascimento, telefone, celular) {
+    var lsCpf = limparCPF(cpf); // Remove pontuação antes de salvar
     alasql(`INSERT INTO clientes (nome, cpf, nascimento, telefone, celular) VALUES (?, ?, ?, ?, ?)`, 
-        [nome, cpf, nascimento, telefone, celular]);
+        [nome, lsCpf, nascimento, telefone, celular]);
 }
 
-function listarClientes() {
+export function listarClientes() {
     return alasql(`SELECT * FROM clientes`);
 }
 
-function excluirCliente(id) {
-    alasql(`DELETE FROM clientes WHERE id = ?`, [id]);
+export function excluirCliente(id) {
+
+    var liId = Number(id); // Garante que o ID seja um número
+
+    // Verifica se o ID realmente existe no banco
+    const cliente = alasql("SELECT * FROM clientes WHERE id = ?", [liId]);
+
+    if (cliente.length === 0) {
+        alert("Erro: Cliente não encontrado!");
+        return;
+    }
+
+    alasql(`DELETE FROM clientes WHERE id = ?`, [liId]);
+    alert('Cliente excluído!');
+    listarClientes();
 }

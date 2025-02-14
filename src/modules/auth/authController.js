@@ -56,6 +56,7 @@ document.getElementById("btnUpload")?.addEventListener("click", function () {
     reader.onload = function (event) {
         try {
             const dados = JSON.parse(event.target.result);
+            console.log('dados', dados);
 
             // Chama o serviço para importar os dados (já validando o JSON)
             importarBancoService(dados);
@@ -63,8 +64,8 @@ document.getElementById("btnUpload")?.addEventListener("click", function () {
             alert("Banco de dados importado com sucesso!");
             fileInput.value = ""; // Limpa o input após o upload
         } catch (error) {
-            alert("Erro ao processar o arquivo. Verifique se é um JSON válido.");
-        }
+            alert("Erro ao processar o arquivo. Verifique se é um JSON válido." + error);
+        }        
     };
 
     reader.readAsText(file);

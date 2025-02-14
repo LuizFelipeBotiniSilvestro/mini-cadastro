@@ -1,4 +1,21 @@
+import { carregarClientes, cadastrarEndereco, listarEnderecos, excluirEndereco } from "./enderecoService.js";
+
+
 document.addEventListener('DOMContentLoaded', function () {
+
+    const cepInput = document.getElementById("cep");
+
+    // Aplica máscara ao CEP
+    cepInput.addEventListener("input", function () {
+        let cep = cepInput.value.replace(/\D/g, ""); // Remove tudo que não for número
+
+        if (cep.length > 5) {
+            cep = cep.substring(0, 5) + "-" + cep.substring(5, 8);
+        }
+
+        cepInput.value = cep;
+    });
+    
     preencherClientes();
     listarEnderecosNaTabela();
 });
@@ -36,23 +53,39 @@ function preencherClientes() {
     });
 }
 
-// Listar endereços na tabela
 function listarEnderecosNaTabela() {
-    const enderecos = listarEnderecos();
-    const tabela = document.getElementById('tabelaEnderecos');
-    tabela.innerHTML = `<tr><th>Cliente</th><th>Endereço</th><th>Principal</th><th>Ações</th></tr>`;
+    let data = []; // Variável para armazenar os clientes
+    data = listarEnderecos(); // Obtém os enderecos do banco
+    atualizarTabela(data);
+}
+
+function atualizarTabela(enderecos) {
+    const tabelaBody = document.getElementById('tabelaEnderecosBody');
+    tabelaBody.innerHTML = ''; // Limpa a tabela antes de preencher
 
     enderecos.forEach(endereco => {
-        tabela.innerHTML += `
+        const row = `
             <tr>
                 <td>${endereco.cliente_nome}</td>
+                <td>${endereco.cep}</td>
                 <td>${endereco.rua}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}</td>
                 <td>${endereco.principal ? '✔️' : ''}</td>
-                <td>
-                    <button onclick="excluirEnderecoAction(${endereco.id})">Excluir</button>
+                 <td>
+                    <button class="btn btn-danger btn-sm btn-excluir" data-id="${endereco.id}">
+                        Excluir
+                    </button>
                 </td>
             </tr>
         `;
+        tabelaBody.innerHTML += row;
+    });
+
+    // Adiciona evento de clique nos botões de exclusão
+    document.querySelectorAll(".btn-excluir").forEach(button => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            excluirEnderecoAction(id);
+        });
     });
 }
 

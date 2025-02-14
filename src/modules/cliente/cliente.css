@@ -1,13 +1,12 @@
 .container {
-    max-width: 600px;
+    max-width: 1080px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background: #f9f9f9;
 }
 
-input, button {
+input {
     display: block;
     width: 100%;
     margin: 10px 0;
@@ -15,12 +14,10 @@ input, button {
 }
 
 button {
-    background: #28a745;
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
     color: white;
     border: none;
     cursor: pointer;
-}
-
-button:hover {
-    background: #218838;
 }

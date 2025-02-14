@@ -13,72 +13,82 @@
 
     <script src="../../shared/alasql.min.js"></script>
     <script src="../../shared/db.js"></script>
-    <script src="enderecoService.js"></script>
-    <script src="enderecoController.js" defer></script>
+    <script src="enderecoService.js" type="module"></script>
+    <script src="enderecoController.js" type="module" defer></script>    
     <script src="../../app.js"></script>
 </head>
 <body>
     <div class="container mt-4">
-        <div class="card p-4">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../dashboard/dashboard.html">Início</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Cadastro de Endereços</li>
-                </ol>
-            </nav>
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../dashboard/dashboard.html">Início</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cadastro de Endereços</li>
+            </ol>
+        </nav>
 
-            <h2 class="text-center mb-4">Cadastro de Endereços</h2>
+        <h2 class="text-center mb-4">Cadastro de Endereços</h2>
 
-            <!-- Formulário de Cadastro -->
-            <form id="enderecoForm" class="row g-3">
+        <!-- Formulário de Cadastro -->
+        <form id="enderecoForm" class="row g-3">
+
+            <div class="row">
                 <div class="col-md-6">
                     <label class="form-label">Cliente:</label>
                     <select id="cliente_id" class="form-select" required></select>
                 </div>
-
+    
                 <div class="col-md-6">
-                    <label class="form-label">CEP:</label>
-                    <input type="text" id="cep" class="form-control" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Rua:</label>
-                    <input type="text" id="rua" class="form-control" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Bairro:</label>
-                    <input type="text" id="bairro" class="form-control" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Cidade:</label>
-                    <input type="text" id="cidade" class="form-control" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Estado:</label>
-                    <input type="text" id="estado" class="form-control" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">País:</label>
-                    <input type="text" id="pais" class="form-control" required>
-                </div>
-
-                <div class="col-12">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="principal">
                         <label class="form-check-label" for="principal">Endereço Principal</label>
                     </div>
                 </div>
 
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-3">
+                    <label class="form-label">CEP:</label>
+                    <input type="text" id="cep" class="form-control" required>
                 </div>
-            </form>
-        </div>
+    
+                <div class="col-md-5">
+                    <label class="form-label">Rua:</label>
+                    <input type="text" id="rua" class="form-control" required>
+                </div>
+    
+                <div class="col-md-4">
+                    <label class="form-label">Bairro:</label>
+                    <input type="text" id="bairro" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-4">
+                    <label class="form-label">Cidade:</label>
+                    <input type="text" id="cidade" class="form-control" required>
+                </div>
+    
+                <div class="col-md-4">
+                    <label class="form-label">Estado:</label>
+                    <input type="text" id="estado" class="form-control" required>
+                </div>
+    
+                <div class="col-md-4">
+                    <label class="form-label">País:</label>
+                    <input type="text" id="pais" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="col-12">
+
+            </div>
+
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+        </form>
 
         <h3 class="mt-4">Lista de Endereços</h3>
 
@@ -92,7 +102,9 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="tabelaEnderecosBody">
+                 <!-- Os dados serão inseridos aqui pelo JavaScript -->
+            </tbody>
         </table>
     </div>
 

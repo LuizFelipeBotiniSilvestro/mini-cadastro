@@ -1,30 +1,69 @@
-.auth-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #f9f9f9;
+/* Define o fundo da tela de login igual ao Dashboard */
+.auth-body {
+    background-color: #003b5c; /* Azul escuro */
+}
+
+/* Centraliza o card de login */
+.auth-card {
+    max-width: 360px;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    background: #ffffff;
+    padding: 2rem;
+}
+
+/* Estiliza "AgroSys" no mesmo padrão do Dashboard */
+.agrosys-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #003b5c; /* Azul escuro */
+    text-transform: uppercase;
     text-align: center;
 }
 
-input, button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
+.agrosys-logo span {
+    color: #17a2b8; /* Azul claro */
 }
 
-button {
-    background: #007bff;
+/* Ajusta os inputs do login para ficarem iguais aos do Dashboard */
+.custom-input {
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+}
+
+/* Ajusta os botões para manter o padrão */
+.custom-btn {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: #17a2b8;
     color: white;
     border: none;
-    cursor: pointer;
+    transition: background 0.3s ease-in-out;
 }
 
-button:hover {
-    background: #0056b3;
+.custom-btn:hover {
+    background-color: #1287a8;
 }
+
+/* Ajusta o link do cadastro */
+.custom-link {
+    color: #17a2b8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+}
+
+
+
 
 /* Aumenta o tamanho do container  */
 .container {

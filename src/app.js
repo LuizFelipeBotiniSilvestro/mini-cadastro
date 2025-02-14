@@ -20,11 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
 })();
 
 function carregarNomeUsuario() {
+    const nomeUsuarioEl = document.getElementById('nomeUsuario');
     const usuario = sessionStorage.getItem('usuario');
 
-    if (usuario) {
+    if (nomeUsuarioEl && usuario) {
         const usuarioObjeto = JSON.parse(usuario);
-        document.getElementById('nomeUsuario').textContent = usuarioObjeto.nome;
+        nomeUsuarioEl.textContent = usuarioObjeto.nome;
     }
 }
 

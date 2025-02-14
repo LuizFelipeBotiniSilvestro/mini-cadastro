@@ -1,3 +1,5 @@
+import { limparCPF } from '../../shared/utils.js';
+
 async function hashSenha(senha) {
     const encoder = new TextEncoder();
     const data = encoder.encode(senha);
@@ -8,11 +10,14 @@ async function hashSenha(senha) {
 }
 
 function verificarEmailExistente(email) {
-    return alasql(`SELECT * FROM usuarios WHERE email = ?`, [email]).length > 0;
+    lsEmail = email;
+    var emailExiste = alasql(`SELECT * FROM usuarios WHERE email = ?`, [lsEmail]).length > 0;
+
+    console.log('emailExiste', emailExiste)
+    return emailExiste; //alasql(`SELECT * FROM usuarios WHERE email = ?`, [email]).length > 0;
 }
 
 function cadastrarUsuario(nome, email, senhaHash) {
-    console.log('Cadastrar usuário')
     alasql(`INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`, [nome, email, senhaHash]);
 }
 
@@ -26,27 +31,42 @@ function importarBancoService(dados) {
 
     // Importar Usuários
     if (dados.usuarios && Array.isArray(dados.usuarios)) {
+        console.log('Importando usuários...');
+
         dados.usuarios.forEach(usuario => {
+            console.log('Usuário', usuario);
+
             if (!verificarEmailExistente(usuario.email)) {
+                console.log('inserindo usuário', usuario)
                 alasql("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)", 
                     [usuario.nome, usuario.email, usuario.senha]);
+            }
+            else {
+                console.log('Usuário já existe, pulando:', usuario.email);
             }
         });
     }
 
     // Importar clientes
     if (dados.clientes && Array.isArray(dados.clientes)) {
+        console.log('Importando clientes... ');
         dados.clientes.forEach(cliente => {
+            console.log('Cliente', cliente);
             if (!verificarCPFExistente(cliente.cpf)) {
                 alasql("INSERT INTO clientes (nome, cpf, nascimento, telefone, celular) VALUES (?, ?, ?, ?, ?)", 
                     [cliente.nome, cliente.cpf, cliente.nascimento, cliente.telefone, cliente.celular]);
+            }
+            else {
+                console.log('Cliente já existe, pulando:', cliente.cpf);
             }
         });
     }
 
     // Importar endereços
     if (dados.enderecos && Array.isArray(dados.enderecos)) {
+        console.log('Importando endereços... ')
         dados.enderecos.forEach(endereco => {
+            console.log('Endereço', endereco);
             alasql("INSERT INTO enderecos (cliente_id, cep, rua, bairro, cidade, estado, pais, principal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
                 [endereco.cliente_id, endereco.cep, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.pais, endereco.principal]);
         });
@@ -58,7 +78,9 @@ function verificarEmailExistente(email) {
 }
 
 function verificarCPFExistente(cpf) {
-    return alasql("SELECT * FROM clientes WHERE cpf = ?", [cpf]).length > 0;
+    lsCpf = limparCPF(cpf); // Remove pontuação antes de salvar
+    var cpfExiste = alasql(`SELECT * FROM clientes WHERE cpf = ?`, [lsCpf]).length > 0;
+    return cpfExiste; //alasql(`SELECT * FROM clientes WHERE cpf = ?`, [cpf]).length > 0;
 }
 
 // Função para validar a estrutura do JSON, verificando apenas as chaves existentes

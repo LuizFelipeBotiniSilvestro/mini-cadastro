@@ -1,3 +1,8 @@
+import { listarClientes } from './clienteService.js';
+import { verificarCPFExistente } from './clienteService.js';
+import { cadastrarCliente } from './clienteService.js';
+import { excluirCliente } from './clienteService.js';
+
 document.addEventListener('DOMContentLoaded', function () {
     listarClientesNaTabela();
 });
@@ -46,7 +51,7 @@ function atualizarTabela(clientes) {
                 <td>${telefoneFormatado}</td>
                 <td>${celularFormatado}</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" onclick="excluirClienteAction(${cliente.id})">
+                    <button class="btn btn-danger btn-sm btn-excluir" data-id="${cliente.id}">
                         Excluir
                     </button>
                 </td>
@@ -54,11 +59,18 @@ function atualizarTabela(clientes) {
         `;
         tabelaBody.innerHTML += row;
     });
+
+    // Adiciona evento de clique nos botões de exclusão
+    document.querySelectorAll(".btn-excluir").forEach(button => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            excluirClienteAction(id);
+        });
+    });
 }
 
 function excluirClienteAction(id) {
     excluirCliente(id);
-    alert('Cliente excluído!');
     listarClientesNaTabela();
 }
 
