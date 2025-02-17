@@ -1,9 +1,31 @@
 import { validarCPF, validarDataNascimento } from "../../shared/utils.js";
-import { listarClientes, verificarCPFExistente, cadastrarCliente, excluirCliente } from './clienteService.js';
+import { atualizarCliente, listarClientes, verificarCPFExistente, cadastrarCliente, excluirCliente } from './clienteService.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     listarClientesNaTabela();
+
+    const nomeInput = document.getElementById("nome"); // Agora é definido antes
+    nomeInput.addEventListener("input", atualizarCaracteresRestantes);
+
+    atualizarCaracteresRestantes(); // Chama ao carregar a página para exibir (50) inicialmente
 });
+
+function atualizarCaracteresRestantes() {
+    const nomeInput = document.getElementById("nome");
+    const contadorNome = document.getElementById("contadorNome");
+    const maxCaracteres = 50;
+
+    const caracteresDigitados = nomeInput.value.length;
+    const caracteresRestantes = maxCaracteres - caracteresDigitados;
+
+    contadorNome.textContent = `(${caracteresRestantes})`;
+
+    if (caracteresRestantes < 10) {
+        contadorNome.classList.add("text-danger");
+    } else {
+        contadorNome.classList.remove("text-danger");
+    }
+}
 
 document.getElementById('clienteForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -13,6 +35,9 @@ document.getElementById('clienteForm').addEventListener('submit', function (e) {
     const nascimento = document.getElementById('nascimento').value;
     const telefone = document.getElementById('telefone').value;
     const celular = document.getElementById('celular').value;
+
+    // Verifica se é edição
+    const clienteId = document.getElementById('clienteForm').getAttribute('data-editing-id');
 
     // Validação do CPF
     if (!validarCPF(cpf)) {
@@ -26,17 +51,38 @@ document.getElementById('clienteForm').addEventListener('submit', function (e) {
       return;
     }
 
-    if (verificarCPFExistente(cpf)) {
-        alert('CPF já cadastrado!');
-        return;
+    if (clienteId == null || clienteId == 0 || !clienteId) {
+        if (verificarCPFExistente(cpf)) {
+            alert('CPF já cadastrado!');
+            return;
+        }
     }
 
-    cadastrarCliente(nome, cpf, nascimento, telefone, celular);
-    alert('Cliente cadastrado com sucesso!');
+    // Se estiver editando um cliente, chama a função de atualização
+    if (clienteId) {
+        atualizarCliente(clienteId, nome, nascimento, telefone, celular);
+        alert('Cliente atualizado com sucesso!');        
+    } else {
+        if (verificarCPFExistente(cpf)) {
+            alert('CPF já cadastrado!');
+            return;
+        }
+        cadastrarCliente(nome, cpf, nascimento, telefone, celular);
+        alert('Cliente cadastrado com sucesso!');
+    }
 
     // Atualiza os dados e a tabela
     listarClientesNaTabela();
+
+    resetarFormulario();
 });
+
+function resetarFormulario() {
+    document.getElementById('clienteForm').reset();
+    document.getElementById('clienteForm').removeAttribute('data-editing-id');
+    document.getElementById('cpf').removeAttribute("readonly"); // CPF volta a ser editável
+    document.getElementById('btn-submit').textContent = "Cadastrar";
+}
 
 function listarClientesNaTabela() {
     let data = []; // Variável para armazenar os clientes
@@ -61,6 +107,9 @@ function atualizarTabela(clientes) {
                 <td>${telefoneFormatado}</td>
                 <td>${celularFormatado}</td>
                 <td>
+                    <button class="btn btn-warning btn-sm btn-editar" data-id="${cliente.id}">
+                        Editar
+                    </button>
                     <button class="btn btn-danger btn-sm btn-excluir" data-id="${cliente.id}">
                         Excluir
                     </button>
@@ -77,11 +126,44 @@ function atualizarTabela(clientes) {
             excluirClienteAction(id);
         });
     });
+
+    // Adiciona evento de clique nos botões de edição
+    document.querySelectorAll(".btn-editar").forEach(button => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            editarClienteAction(id);
+        });
+    });
 }
 
 function excluirClienteAction(id) {
     excluirCliente(id);
     listarClientesNaTabela();
+}
+
+function editarClienteAction(id) {
+    const cliente = listarClientes().find(c => c.id == id);
+
+    if (!cliente) {
+        alert("Cliente não encontrado!");
+        return;
+    }
+
+    document.getElementById('cpf').setAttribute("readonly", "true"); // Torna o CPF somente leitura
+
+    // Preencher os campos com os dados do cliente
+    document.getElementById('nome').value = cliente.nome;
+    document.getElementById('cpf').value = formatarCPF(cliente.cpf);
+    document.getElementById('nascimento').value = cliente.nascimento;
+    document.getElementById('telefone').value = cliente.telefone;
+    document.getElementById('celular').value = cliente.celular;
+    
+    // Salva o ID do cliente sendo editado
+    document.getElementById('clienteForm').setAttribute('data-editing-id', id)
+
+    document.getElementById('btn-submit').textContent = "Atualizar";
+
+    atualizarCaracteresRestantes()
 }
 
 function formatarCPF(cpf) {

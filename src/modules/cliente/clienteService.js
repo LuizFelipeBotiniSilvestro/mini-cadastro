@@ -12,6 +12,13 @@ export function cadastrarCliente(nome, cpf, nascimento, telefone, celular) {
         [nome, lsCpf, nascimento, telefone, celular]);
 }
 
+export function atualizarCliente(id, nome, nascimento, telefone, celular) {
+    var liId = Number(id); // Garante que o ID seja um número
+
+    alasql(`UPDATE clientes SET nome = ?, nascimento = ?, telefone = ?, celular = ? WHERE id = ?`, 
+        [nome, nascimento, telefone, celular, liId]);
+}
+
 export function listarClientes() {
     return alasql(`SELECT * FROM clientes`);
 }

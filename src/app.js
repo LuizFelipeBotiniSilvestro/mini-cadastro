@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     carregarNomeUsuario();
     
     // Copiar e colar somente com letras maiúsculas (padrão para uniformidade do projeto)
-    document.querySelectorAll("input:not([type='password']):not([type='email']), textarea")
+    document.querySelectorAll("input:not([type='password']):not([type='email']):not([type='FILE']), textarea")
     .forEach(input => {
         input.addEventListener("input", function () {
             this.value = this.value.toUpperCase();

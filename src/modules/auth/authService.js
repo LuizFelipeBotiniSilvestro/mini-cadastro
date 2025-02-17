@@ -27,6 +27,9 @@ export function importarBancoService(dados) {
         return;
     }
 
+    // Mapas para conversão de IDs antigos para novos
+    const mapaIDsClientes = {}; // { id_original: id_novo }
+
     // Importar Usuários
     if (dados.usuarios && Array.isArray(dados.usuarios)) {
         console.log('Importando usuários...');
@@ -53,9 +56,22 @@ export function importarBancoService(dados) {
             if (!verificarCPFExistente(cliente.cpf)) {
                 alasql("INSERT INTO clientes (nome, cpf, nascimento, telefone, celular) VALUES (?, ?, ?, ?, ?)", 
                     [cliente.nome, cliente.cpf, cliente.nascimento, cliente.telefone, cliente.celular]);
+
+                // Obtém o ID recém-gerado
+                const clienteNovo = alasql("SELECT id FROM clientes WHERE cpf = ?", [cliente.cpf])[0];
+
+                if (clienteNovo) {
+                    mapaIDsClientes[cliente.id] = clienteNovo.id; // Associa ID antigo ao novo
+                }
             }
             else {
                 console.log('Cliente já existe, pulando:', cliente.cpf);
+
+                // Se o cliente já existe, obtemos seu ID existente
+                const clienteExistente = alasql("SELECT id FROM clientes WHERE cpf = ?", [cliente.cpf])[0];
+                if (clienteExistente) {
+                    mapaIDsClientes[cliente.id] = clienteExistente.id;
+                }
             }
         });
     }
@@ -65,8 +81,17 @@ export function importarBancoService(dados) {
         console.log('Importando endereços... ')
         dados.enderecos.forEach(endereco => {
             console.log('Endereço', endereco);
-            alasql("INSERT INTO enderecos (cliente_id, cep, rua, bairro, cidade, estado, pais, principal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
-                [endereco.cliente_id, endereco.cep, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.pais, endereco.principal]);
+
+            const novoClienteID = Number(mapaIDsClientes[endereco.cliente_id]); // Busca novo ID do cliente pelo ID original
+
+            if (novoClienteID) {
+                alasql("INSERT INTO enderecos (cliente_id, cep, rua, bairro, cidade, estado, pais, principal) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+                [novoClienteID, endereco.cep, endereco.rua, endereco.bairro, endereco.cidade, endereco.estado, endereco.pais, endereco.principal]);
+            }
+            else {
+                console.warn(`Cliente ID ${endereco.cliente_id} não encontrado na importação. Endereço ignorado.`);
+            }
+            
         });
     }
 }

@@ -1,4 +1,4 @@
-import { cadastrarUsuario, verificarEmailExistente, hashSenha } from "./authService.js";
+import { cadastrarUsuario, verificarEmailExistente, hashSenha, importarBancoService } from "./authService.js";
 
 // Lógica do Login
 document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
