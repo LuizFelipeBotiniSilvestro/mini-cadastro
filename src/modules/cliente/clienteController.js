@@ -1,4 +1,4 @@
-import { validarCPF, validarDataNascimento } from "../../shared/utils.js";
+import { validarCPF, validarDataNascimento, formatarDataParaBr } from "../../shared/utils.js";
 import { atualizarCliente, listarClientes, verificarCPFExistente, cadastrarCliente, excluirCliente } from './clienteService.js';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -99,11 +99,14 @@ function atualizarTabela(clientes) {
         const cpfFormatado = formatarCPF(cliente.cpf);
         const telefoneFormatado = cliente.telefone ? formatarTelefone(cliente.telefone) : '.';
         const celularFormatado = formatarTelefone(cliente.celular);
+        const dataNascimento = formatarDataParaBr(cliente.nascimento);
 
         const row = `
             <tr>
+                <td>${cliente.id}</td>
                 <td>${cliente.nome}</td>
                 <td>${cpfFormatado}</td>
+                <td>${dataNascimento}</td>
                 <td>${telefoneFormatado}</td>
                 <td>${celularFormatado}</td>
                 <td>

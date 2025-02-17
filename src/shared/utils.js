@@ -62,6 +62,15 @@ export function validarDataNascimento(dataNascimento) {
     return true;
 }
 
+export function formatarDataParaBr(dataIso) {
+    if (!dataIso) return ""; // Retorna vazio se a data for inválida
+
+    const partes = dataIso.split("-");
+    if (partes.length !== 3) return ""; // Valida se está no formato correto
+
+    return `${partes[2]}-${partes[1]}-${partes[0]}`; // Retorna no formato dd-mm-yyyy
+}
+
 
 
 
