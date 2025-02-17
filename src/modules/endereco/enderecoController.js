@@ -148,6 +148,36 @@ function excluirEnderecoAction(id) {
     listarEnderecosNaTabela();
 }
 
+document.getElementById("cep").addEventListener("blur", async function () {
+    const cep = this.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (cep.length !== 8) {
+        alert("CEP inválido! Digite um CEP com 8 números.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+            alert("CEP não encontrado! Verifique e tente novamente.");
+            limparCamposEndereco();
+            return;
+        }
+
+        // Preenchendo os campos automaticamente
+        document.getElementById("rua").value = data.logradouro || "";
+        document.getElementById("bairro").value = data.bairro || "";
+        document.getElementById("cidade").value = data.localidade || "";
+        document.getElementById("estado").value = data.uf || "";
+        document.getElementById("pais").value = "Brasil"; // Mantém fixo
+    } catch (error) {
+        alert("Erro ao buscar CEP. Tente novamente.");
+        console.error("Erro na API do ViaCEP:", error);
+    }
+});
+
 // Função para resetar o formulário e liberar campos bloqueados
 function resetarFormulario() {
     document.getElementById("enderecoForm").reset();

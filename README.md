@@ -8,6 +8,7 @@ Desenvolvido em **HTML, CSS e JavaScript (Vanilla)**, utilizando **AlaSQL.js** p
 - **AlaSQL.js** (Banco de dados no navegador)
 - **Bootstrap 5** (Design responsivo)
 - **Criptografia SHA-256** para senhas
+- **Consulta endereço via api service**
 
 ## Arquitetura
 - **O projeto foi desenvolvido seguindo os princípios do Domain-Driven Design (DDD), garantindo organização, modularização e escalabilidade.**
