@@ -162,7 +162,6 @@ document.getElementById("cep").addEventListener("blur", async function () {
 
         if (data.erro) {
             alert("CEP não encontrado! Verifique e tente novamente.");
-            limparCamposEndereco();
             return;
         }
 
