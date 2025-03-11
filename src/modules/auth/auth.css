@@ -13,8 +13,8 @@
     padding: 2rem;
 }
 
-/* Estiliza "AgroSys" no mesmo padrão do Dashboard */
-.agrosys-logo {
+/* Estiliza "sistema" no mesmo padrão do Dashboard */
+.sistema-logo {
     font-size: 2rem;
     font-weight: bold;
     color: #003b5c; /* Azul escuro */
@@ -22,7 +22,7 @@
     text-align: center;
 }
 
-.agrosys-logo span {
+.sistema-logo span {
     color: #17a2b8; /* Azul claro */
 }
 
